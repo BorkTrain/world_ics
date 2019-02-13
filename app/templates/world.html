@@ -1,0 +1,45 @@
+{% include 'header.html' %}
+
+ <style>
+.grid { 
+  display: grid;
+  grid-template-rows: 222px 294px 74px;
+  grid-template-columns: 170px 388px 242px;
+  }
+
+.grid img:nth-child(1) {
+  grid-row: span 2;
+ }
+
+ .grid img:nth-child(6) {
+  grid-column: span 3;
+ }
+
+ </style>
+
+ <body>
+
+{% include 'navigation.html' %}
+
+  <!-- Page Content -->
+  <div class="container">
+   <h1 class="mt-5">Power Plant World</h1>
+   <p></p>
+  </div>
+
+
+  <main class="grid">
+   <img src="/images/{{ plc_imgs.get('WATERPUMP') }}" />
+   <img src="/images/{{ plc_imgs.get('TURBINE') }}" />
+   <img src="/images/{{ plc_imgs.get('GENERATOR') }}" />
+   <img src="/images/{{ plc_imgs.get('BOILER') }}" />
+   <img src="/images/{{ plc_imgs.get('PYLON') }}" />
+   <img src="/images/{{ plc_imgs.get('FUEL') }}" />
+  </main>
+
+
+{% include 'footer.html' %}
+
+ </body>
+
+</html>
