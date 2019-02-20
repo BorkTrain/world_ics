@@ -24,10 +24,8 @@ def index_route():
 
 @app.route('/world')
 def world_route():
-	start = time.time()
 	plc_imgs = get_plc_img()
 	print(plc_imgs)
-	print('++ PAGE TIME: %s' % (time.time()-start))
 	return render_template('world.html',plc_imgs=plc_imgs)
 
 if __name__ == '__main__':
