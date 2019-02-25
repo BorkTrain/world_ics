@@ -29,4 +29,4 @@ def world_route():
 	return render_template('world.html',plc_imgs=plc_imgs)
 
 if __name__ == '__main__':
-    app.run(debug=True,host="10.10.1.150",port=9001)
+    app.run(debug=True,host="0.0.0.0",port=9001)
