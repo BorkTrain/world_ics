@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import time
 
 PLCS = {'FUEL':'10.10.1.120','WATERPUMP':'10.10.1.121','BOILER':'10.10.1.122','TURBINE':'10.10.1.123','GENERATOR':'10.10.1.124','PYLON':'10.10.1.125'}
 
@@ -40,34 +40,10 @@ def get_fuel_img(plc_vals):
 	plc_res = "fuel_{}.png"
 	if plc_sum == 33:
 		rate = 'max'
-		send_to_plc(10,1,PLCS.get('WATERPUMP'))
-		send_to_plc(10,1,PLCS.get('BOILER'))
-		send_to_plc(10,1,PLCS.get('TURBINE'))
-		send_to_plc(10,1,PLCS.get('GENERATOR'))
-		send_to_plc(10,1,PLCS.get('PYLON'))
-		send_to_plc(11,3,PLCS.get('BOILER'))
-		send_to_plc(11,3,PLCS.get('TURBINE'))
-		send_to_plc(11,3,PLCS.get('GENERATOR'))
-		send_to_plc(11,3,PLCS.get('PYLON'))
 	elif plc_sum == 22:
 		rate = 'norm'
-		send_to_plc(10,1,PLCS.get('WATERPUMP'))
-		send_to_plc(10,1,PLCS.get('BOILER'))
-		send_to_plc(10,1,PLCS.get('TURBINE'))
-		send_to_plc(10,1,PLCS.get('GENERATOR'))
-		send_to_plc(10,1,PLCS.get('PYLON'))
-		send_to_plc(11,2,PLCS.get('BOILER'))
-		send_to_plc(11,2,PLCS.get('TURBINE'))
-		send_to_plc(11,2,PLCS.get('GENERATOR'))
-		send_to_plc(11,2,PLCS.get('PYLON'))
 	elif plc_sum == 11:
 		rate = 'low'
-		send_to_plc(10,1,PLCS.get('WATERPUMP'))
-		for i in (10,11):
-			send_to_plc(i,1,PLCS.get('BOILER'))
-			send_to_plc(i,1,PLCS.get('TURBINE'))
-			send_to_plc(i,1,PLCS.get('GENERATOR'))
-			send_to_plc(i,1,PLCS.get('PYLON'))
 	else:
 		rate = 'off'
 		for i in (10,11):
@@ -154,3 +130,89 @@ def get_pylon_img(plc_vals):
 	else:
 		rate = 'off'
 	return plc_res.format(rate)
+
+def prod_on():
+	x = get_plc_img()
+	y = x.get('WATERPUMP')
+	z = x.get('FUEL')
+	if y.__contains__('on') and z != 'fuel_off.png':
+		send_to_plc(10,1,PLCS.get('WATERPUMP'))
+		send_to_plc(10,1,PLCS.get('BOILER'))
+		send_to_plc(10,1,PLCS.get('TURBINE'))
+		send_to_plc(10,1,PLCS.get('GENERATOR'))
+		send_to_plc(10,1,PLCS.get('PYLON'))
+	return True 
+
+def plc_rate():
+	x = get_plc_img()
+	y = x.get('WATERPUMP')
+	z = x.get('FUEL')
+	if y.__contains__('on') and z == 'fuel_low.png':
+		send_to_plc(11,1,PLCS.get('BOILER'))
+		send_to_plc(11,1,PLCS.get('TURBINE'))
+		send_to_plc(11,1,PLCS.get('GENERATOR'))
+		send_to_plc(11,1,PLCS.get('PYLON'))
+	elif y.__contains__('on') and z == 'fuel_norm.png':
+		send_to_plc(11,2,PLCS.get('BOILER'))
+		send_to_plc(11,2,PLCS.get('TURBINE'))
+		send_to_plc(11,2,PLCS.get('GENERATOR'))
+		send_to_plc(11,2,PLCS.get('PYLON'))
+	elif y.__contains__('on') and z == 'fuel_max.png':
+		send_to_plc(11,3,PLCS.get('BOILER'))
+		send_to_plc(11,3,PLCS.get('TURBINE'))
+		send_to_plc(11,3,PLCS.get('GENERATOR'))
+		send_to_plc(11,3,PLCS.get('PYLON'))
+	else:
+		pass
+	return True
+
+def water_time():
+	x = get_plc_img()
+	y = x.get('WATERPUMP')
+	z = x.get('FUEL')
+	timeout_90 = time.time() + 90
+	timeout_60 = time.time() + 60
+	timeout_30 = time.time() + 30
+	if y == 'waterpump_off.png' and z == 'fuel_low.png':
+		while time.time() < timeout_90:
+			pass
+		else:
+			time_off_90()	
+	elif y == 'waterpump_off.png' and z == 'fuel_norm.png':
+		while time.time() < timeout_60:
+			pass
+		else:
+			time_off_60()
+	elif y == 'waterpump_off.png' and z == 'fuel_max.png':
+		while time.time() < timeout_30:
+			pass
+		else:
+			time_off_30()
+	else:
+		pass
+	return True
+		
+
+def time_off_90():
+	for i in (10,11):
+			send_to_plc(i,0,PLCS.get('WATERPUMP'))
+			send_to_plc(i,0,PLCS.get('BOILER'))
+			send_to_plc(i,0,PLCS.get('TURBINE'))
+			send_to_plc(i,0,PLCS.get('GENERATOR'))
+			send_to_plc(i,0,PLCS.get('PYLON'))
+
+def time_off_60():
+	for i in (10,11):
+		send_to_plc(i,0,PLCS.get('WATERPUMP'))
+		send_to_plc(i,0,PLCS.get('BOILER'))
+		send_to_plc(i,0,PLCS.get('TURBINE'))
+		send_to_plc(i,0,PLCS.get('GENERATOR'))
+		send_to_plc(i,0,PLCS.get('PYLON'))
+
+def time_off_30():
+	for i in (10,11):
+		send_to_plc(i,0,PLCS.get('WATERPUMP'))
+		send_to_plc(i,0,PLCS.get('BOILER'))
+		send_to_plc(i,0,PLCS.get('TURBINE'))
+		send_to_plc(i,0,PLCS.get('GENERATOR'))
+		send_to_plc(i,0,PLCS.get('PYLON'))
