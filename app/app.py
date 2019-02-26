@@ -25,7 +25,6 @@ def index_route():
 @app.route('/world')
 def world_route():
 	plc_imgs = get_plc_img()
-	water_time()
 	plc_rate()
 	prod_on()
 	print(plc_imgs)

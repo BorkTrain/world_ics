@@ -63,11 +63,6 @@ def get_water_img(plc_vals):
 		rate = 'on'
 	else:
 		rate = 'off'
-		for i in (10,11):
-			send_to_plc(i,0,PLCS.get('BOILER'))
-			send_to_plc(i,0,PLCS.get('TURBINE'))
-			send_to_plc(i,0,PLCS.get('GENERATOR'))
-			send_to_plc(i,0,PLCS.get('PYLON'))
 	return plc_res.format(rate)
 
 def get_boiler_img(plc_vals):
@@ -166,53 +161,3 @@ def plc_rate():
 		pass
 	return True
 
-def water_time():
-	x = get_plc_img()
-	y = x.get('WATERPUMP')
-	z = x.get('FUEL')
-	timeout_90 = time.time() + 90
-	timeout_60 = time.time() + 60
-	timeout_30 = time.time() + 30
-	if y == 'waterpump_off.png' and z == 'fuel_low.png':
-		while time.time() < timeout_90:
-			pass
-		else:
-			time_off_90()	
-	elif y == 'waterpump_off.png' and z == 'fuel_norm.png':
-		while time.time() < timeout_60:
-			pass
-		else:
-			time_off_60()
-	elif y == 'waterpump_off.png' and z == 'fuel_max.png':
-		while time.time() < timeout_30:
-			pass
-		else:
-			time_off_30()
-	else:
-		pass
-	return True
-		
-
-def time_off_90():
-	for i in (10,11):
-			send_to_plc(i,0,PLCS.get('WATERPUMP'))
-			send_to_plc(i,0,PLCS.get('BOILER'))
-			send_to_plc(i,0,PLCS.get('TURBINE'))
-			send_to_plc(i,0,PLCS.get('GENERATOR'))
-			send_to_plc(i,0,PLCS.get('PYLON'))
-
-def time_off_60():
-	for i in (10,11):
-		send_to_plc(i,0,PLCS.get('WATERPUMP'))
-		send_to_plc(i,0,PLCS.get('BOILER'))
-		send_to_plc(i,0,PLCS.get('TURBINE'))
-		send_to_plc(i,0,PLCS.get('GENERATOR'))
-		send_to_plc(i,0,PLCS.get('PYLON'))
-
-def time_off_30():
-	for i in (10,11):
-		send_to_plc(i,0,PLCS.get('WATERPUMP'))
-		send_to_plc(i,0,PLCS.get('BOILER'))
-		send_to_plc(i,0,PLCS.get('TURBINE'))
-		send_to_plc(i,0,PLCS.get('GENERATOR'))
-		send_to_plc(i,0,PLCS.get('PYLON'))
