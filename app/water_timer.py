@@ -11,32 +11,32 @@ def water_time():
 		z = x.get('FUEL')
 		if y == 'waterpump_off.png' and z == 'fuel_low.png':
 			replay_time = 0
-			while replay_time < 10:
+			while replay_time < 9:
 				y = x.get('WATERPUMP')
 				if y != 'waterpump_off.png':
 					break
-				time.sleep(10)
-				replay_time += 4
+				time.sleep(90)
+				replay_time += 1
 			else:
 				time_off()	
 		elif y == 'waterpump_off.png' and z == 'fuel_norm.png':
 			replay_time = 0
-			while replay_time < 10:
+			while replay_time < 9:
 				y = x.get('WATERPUMP')
 				if y != 'waterpump_off.png':
 					break
-				time.sleep(10)
-				replay_time += 6
+				time.sleep(60)
+				replay_time += 1
 			else:
 				time_off()	
 		elif y == 'waterpump_off.png' and z == 'fuel_max.png':
 			replay_time = 0
-			while replay_time < 10:
+			while replay_time < 9:
 				y = x.get('WATERPUMP')
 				if y != 'waterpump_off.png':
 					break
-				time.sleep(10)
-				replay_time += 11
+				time.sleep(30)
+				replay_time += 1
 			else:
 				time_off()	
 		else:
