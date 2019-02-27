@@ -3,7 +3,7 @@ import time
 from reg_reader import *
 import threading
 
-replay_time = time.time() + 60
+replay_time = 0
 
 def water_time():
 	threading.Timer(60.0, water_time).start()
@@ -11,11 +11,12 @@ def water_time():
 	y = x.get('WATERPUMP')
 	z = x.get('FUEL')
 	if y == 'waterpump_off.png' and z == 'fuel_low.png':
-		timeout_90 = time.time() + 900
-		while time.time() < timeout_90:
+		while replay_time < 10:
 			y = x.get('WATERPUMP')
 			if y != 'waterpump_off.png':
 				break
+			time.sleep(10)
+			replay_time += 3
 		time_off()	
 	elif y == 'waterpump_off.png' and z == 'fuel_norm.png':
 		timeout_60 = time.time() + 600
@@ -32,7 +33,7 @@ def water_time():
 				break
 		time_off()
 	else:
-		pass
+		time.sleep(60)
 	return True
 		
 def time_off():
@@ -43,9 +44,11 @@ def time_off():
 		send_to_plc(i,0,PLCS.get('GENERATOR'))
 		send_to_plc(i,0,PLCS.get('PYLON'))
 
+
+
+
 def main():
 	water_time()
 
 if __name__ == "__main__":
 	main()
-	
