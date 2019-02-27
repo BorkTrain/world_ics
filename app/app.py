@@ -29,6 +29,7 @@ def world_route():
 	plc_imgs = get_plc_img()
 	plc_rate()
 	prod_on()
+#	water_time() -- how do I not call after page reloads? 
 	print(plc_imgs)
 	return render_template('world.html',plc_imgs=plc_imgs)
 

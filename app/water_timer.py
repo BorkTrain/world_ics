@@ -3,37 +3,44 @@ import time
 from reg_reader import *
 import threading
 
-replay_time = 0
-
 def water_time():
-	threading.Timer(60.0, water_time).start()
-	x = get_plc_img()
-	y = x.get('WATERPUMP')
-	z = x.get('FUEL')
-	if y == 'waterpump_off.png' and z == 'fuel_low.png':
-		while replay_time < 10:
-			y = x.get('WATERPUMP')
-			if y != 'waterpump_off.png':
-				break
-			time.sleep(10)
-			replay_time += 3
-		time_off()	
-	elif y == 'waterpump_off.png' and z == 'fuel_norm.png':
-		timeout_60 = time.time() + 600
-		while time.time() < timeout_60:
-			y = x.get('WATERPUMP')
-			if y != 'waterpump_off.png':
-				break
-		time_off()
-	elif y == 'waterpump_off.png' and z == 'fuel_max.png':
-		timeout_30 = time.time() + 300
-		while time.time() < timeout_30:
-			y = x.get('WATERPUMP')
-			if y != 'waterpump_off.png':
-				break
-		time_off()
-	else:
-		time.sleep(60)
+#	threading.Timer(60.0, water_time).start()
+	while True:
+		x = get_plc_img()
+		y = x.get('WATERPUMP')
+		z = x.get('FUEL')
+		if y == 'waterpump_off.png' and z == 'fuel_low.png':
+			replay_time = 0
+			while replay_time < 10:
+				y = x.get('WATERPUMP')
+				if y != 'waterpump_off.png':
+					break
+				time.sleep(10)
+				replay_time += 4
+			else:
+				time_off()	
+		elif y == 'waterpump_off.png' and z == 'fuel_norm.png':
+			replay_time = 0
+			while replay_time < 10:
+				y = x.get('WATERPUMP')
+				if y != 'waterpump_off.png':
+					break
+				time.sleep(10)
+				replay_time += 6
+			else:
+				time_off()	
+		elif y == 'waterpump_off.png' and z == 'fuel_max.png':
+			replay_time = 0
+			while replay_time < 10:
+				y = x.get('WATERPUMP')
+				if y != 'waterpump_off.png':
+					break
+				time.sleep(10)
+				replay_time += 11
+			else:
+				time_off()	
+		else:
+			time.sleep(60)
 	return True
 		
 def time_off():
