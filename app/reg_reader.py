@@ -40,12 +40,42 @@ def get_fuel_img(plc_vals):
 	plc_res = "fuel_{}.png"
 	if plc_sum == 33:
 		rate = 'max'
+		send_to_plc(10,1,PLCS.get('WATERPUMP'))
+		send_to_plc(10,1,PLCS.get('BOILER'))
+		send_to_plc(10,1,PLCS.get('TURBINE'))
+		send_to_plc(10,1,PLCS.get('GENERATOR'))
+		send_to_plc(10,1,PLCS.get('PYLON'))
+		send_to_plc(11,3,PLCS.get('BOILER'))
+		send_to_plc(11,3,PLCS.get('TURBINE'))
+		send_to_plc(11,3,PLCS.get('GENERATOR'))
+		send_to_plc(11,3,PLCS.get('PYLON'))
 	elif plc_sum == 22:
 		rate = 'norm'
+		send_to_plc(10,1,PLCS.get('WATERPUMP'))
+		send_to_plc(10,1,PLCS.get('BOILER'))
+		send_to_plc(10,1,PLCS.get('TURBINE'))
+		send_to_plc(10,1,PLCS.get('GENERATOR'))
+		send_to_plc(10,1,PLCS.get('PYLON'))
+		send_to_plc(11,2,PLCS.get('BOILER'))
+		send_to_plc(11,2,PLCS.get('TURBINE'))
+		send_to_plc(11,2,PLCS.get('GENERATOR'))
+		send_to_plc(11,2,PLCS.get('PYLON'))
 	elif plc_sum == 11:
 		rate = 'low'
+		send_to_plc(10,1,PLCS.get('WATERPUMP'))
+		for i in (10,11):
+			send_to_plc(i,1,PLCS.get('BOILER'))
+			send_to_plc(i,1,PLCS.get('TURBINE'))
+			send_to_plc(i,1,PLCS.get('GENERATOR'))
+			send_to_plc(i,1,PLCS.get('PYLON'))
 	else:
 		rate = 'off'
+		for i in (10,11):
+			send_to_plc(i,0,PLCS.get('WATERPUMP'))
+			send_to_plc(i,0,PLCS.get('BOILER'))
+			send_to_plc(i,0,PLCS.get('TURBINE'))
+			send_to_plc(i,0,PLCS.get('GENERATOR'))
+			send_to_plc(i,0,PLCS.get('PYLON'))
 	return plc_res.format(rate)
 
 def get_water_img(plc_vals):
@@ -57,6 +87,11 @@ def get_water_img(plc_vals):
 		rate = 'on'
 	else:
 		rate = 'off'
+		for i in (10,11):
+			send_to_plc(i,0,PLCS.get('BOILER'))
+			send_to_plc(i,0,PLCS.get('TURBINE'))
+			send_to_plc(i,0,PLCS.get('GENERATOR'))
+			send_to_plc(i,0,PLCS.get('PYLON'))
 	return plc_res.format(rate)
 
 def get_boiler_img(plc_vals):
@@ -72,6 +107,10 @@ def get_boiler_img(plc_vals):
 		rate = 'on'
 	else:
 		rate = 'off'
+		for i in (10,11):
+			send_to_plc(i,0,PLCS.get('TURBINE'))
+			send_to_plc(i,0,PLCS.get('GENERATOR'))
+			send_to_plc(i,0,PLCS.get('PYLON'))
 	return plc_res.format(rate)
 
 def get_turbine_img(plc_vals):
@@ -87,6 +126,9 @@ def get_turbine_img(plc_vals):
 		rate = 'on'
 	else:
 		rate = 'off'
+		for i in (10,11):
+			send_to_plc(i,0,PLCS.get('GENERATOR'))
+			send_to_plc(i,0,PLCS.get('PYLON'))
 	return plc_res.format(rate)
 
 def get_generator_img(plc_vals):
@@ -96,6 +138,8 @@ def get_generator_img(plc_vals):
 		rate = 'on'
 	else:
 		rate = 'off'
+		for i in (10,11):
+			send_to_plc(i,0,PLCS.get('PYLON'))
 	return plc_res.format(rate)
 
 def get_pylon_img(plc_vals):
