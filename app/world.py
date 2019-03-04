@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from reg_reader.py import *
+from reg_reader import *
 
 
 def display_plc_img():
@@ -17,16 +17,16 @@ def display_plc_img():
 		if plc_name is 'FUEL':
 			img[plc_name] = display_fuel_img(fuel_stat)
 		if plc_name is 'WATERPUMP':
-			img[plc_name] = display_waterpump_img(water_stat)
+			img[plc_name] = display_waterpump_img(water_stat,fuel_stat)
 		if plc_name is 'BOILER':
-			img[plc_name] = display_boiler_img(boiler_stat)
+			img[plc_name] = display_boiler_img(boiler_stat,fuel_stat,water_stat)
 		if plc_name is 'TURBINE':
-			img[plc_name] = display_turbine_img(turbine_stat)
+			img[plc_name] = display_turbine_img(turbine_stat,boiler_stat,fuel_stat)
 		if plc_name is 'GENERATOR':
-			img[plc_name] = display_generator_img(generator_stat)
+			img[plc_name] = display_generator_img(generator_stat,turbine_stat)
 		if plc_name is 'PYLON':
-			img[plc_name] = display_pylon_img(pylon_stat)
-		return res 
+			img[plc_name] = display_pylon_img(pylon_stat,generator_stat,turbine_stat)
+		return img 
 
 def display_fuel_img(fuel_stat):
 	self_stat = fuel_stat
@@ -120,9 +120,9 @@ def display_generator_img(generator_stat,turbine_stat):
 	turbine_stat = turbine_stat
 	plc_img = 'generator_{}.png'
 	if self_stat == 'on' and turbine_stat == 'on':
-		state == 'on'
+		state = 'on'
 	else:
-		state =='off'
+		state = 'off'
 	return plc_img.format(state)
 
 def display_pylon_img(pylon_stat,generator_stat,turbine_stat):
@@ -131,9 +131,9 @@ def display_pylon_img(pylon_stat,generator_stat,turbine_stat):
 	turbine_stat = turbine_stat
 	if self_stat =='on' and generator_stat =='on' and turbine_stat == 'low':
 		state = 'low'
-	elif self_stat = 'on' and generator_stat == 'on' and turbine_stat == 'norm':
+	elif self_stat == 'on' and generator_stat == 'on' and turbine_stat == 'norm':
 		state = 'norm'
-	elif self_stat = 'on' and generator_stat == 'on' and turbine_stat == 'max':
+	elif self_stat == 'on' and generator_stat == 'on' and turbine_stat == 'max':
 		state = 'max'
 	else:
 		state = 'off'

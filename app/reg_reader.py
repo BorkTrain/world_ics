@@ -37,7 +37,6 @@ def get_plc_stat():
 
 def get_fuel_stat(plc_vals):
 	plc_sum = sum(plc_vals)
-	plc_res = rate
 	if plc_sum == 64:
 		rate = 'max'
 	elif plc_sum == 32:
@@ -50,7 +49,6 @@ def get_fuel_stat(plc_vals):
 
 def get_water_stat(plc_vals):
 	plc_sum = sum(plc_vals)
-	plc_res = rate
 	if plc_sum == 16:
 		rate = 'on'
 	else:
@@ -59,7 +57,6 @@ def get_water_stat(plc_vals):
 
 def get_boiler_stat(plc_vals):
 	plc_sum = sum(plc_vals)
-	plc_res = rate
 	if plc_sum == 16:
 		rate = 'open'
 	else:
@@ -68,7 +65,6 @@ def get_boiler_stat(plc_vals):
 
 def get_turbine_stat(plc_vals):
 	plc_sum = sum(plc_vals)
-	plc_res = rate
 	if plc_sum == 16:
 		rate = 'on'
 	else:
@@ -77,7 +73,6 @@ def get_turbine_stat(plc_vals):
 
 def get_generator_stat(plc_vals):
 	plc_sum = sum(plc_vals)
-	plc_res = rate
 	if plc_sum == 16:
 		rate = 'on'
 	else:
@@ -86,7 +81,6 @@ def get_generator_stat(plc_vals):
 
 def get_pylon_stat(plc_vals):
 	plc_sum = sum(plc_vals)
-	plc_res = rate
 	if plc_sum == 16:
 		rate = 'on'
 	else:

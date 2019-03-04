@@ -12,7 +12,7 @@ from flask import request
 from flask import session
 from reg_reader import *
 from water_timer import *
-from world.py import *
+from world import *
 import time
 import threading
 
@@ -32,7 +32,7 @@ def world_route():
 #	plc_rate()
 #	prod_on()
 #	water_time() -- how do I not call after page reloads? 
-	print(plc_imgs)
+	print(plc_img,plc_stat)
 	return render_template('world.html',plc_img=plc_img)
 
 if __name__ == '__main__':
