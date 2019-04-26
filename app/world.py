@@ -25,7 +25,7 @@ def display_plc_img():
 		elif plc_name is 'GENERATOR':
 			img[plc_name] = display_generator_img(generator_stat,turbine_stat)
 		elif plc_name is 'PYLON':
-			img[plc_name] = display_pylon_img(pylon_stat,generator_stat,turbine_stat,boiler_stat,water_stat,fuel_stat)
+			img[plc_name] = display_pylon_img(pylon_stat,generator_stat,turbine_stat,fuel_stat)
 	return img 
 
 def display_fuel_img(fuel_stat):
@@ -108,9 +108,9 @@ def display_turbine_img(turbine_stat,boiler_stat,fuel_stat,water_stat):
 	plc_img = 'turbine_{}.png'
 	if self_stat == 'on' and boiler_stat == 'open' and fuel_stat == 'low' and water_stat == 'on':
 		state = 'low'
-	elif self_stat == 'on' and boiler_stat =='open' and fuel_stat =='norm' and water_stat == 'on':
+	elif self_stat == 'on' and boiler_stat == 'open' and fuel_stat == 'norm' and water_stat == 'on':
 		state = 'norm'
-	elif self_stat == 'on' and boiler_stat =='open' and fuel_stat =='max' and water_stat == 'on':
+	elif self_stat == 'on' and boiler_stat == 'open' and fuel_stat == 'max' and water_stat == 'on':
 		state = 'max'
 	else:
 		state = 'off'
@@ -126,17 +126,17 @@ def display_generator_img(generator_stat,turbine_stat):
 		state = 'off'
 	return plc_img.format(state)
 
-def display_pylon_img(pylon_stat,generator_stat,fuel_stat,turbine_stat,water_stat,boiler_stat):
+def display_pylon_img(pylon_stat,generator_stat,turbine_stat,fuel_stat):
 	self_stat = pylon_stat
-	generator_stat = generator_stat 
+	generator_stat = generator_stat
+	turbine_stat = turbine_stat 
 	fuel_stat = fuel_stat
-	turbine_stat = turbine_stat
 	plc_img = 'pylon_{}.png'
-	if self_stat =='on' and generator_stat =='on' and fuel_stat == 'low' and turbine_stat == 'on' and water_stat == 'on' and boiler_stat == 'open':
+	if self_stat == 'on' and generator_stat == 'on' and fuel_stat == 'low' and turbine_stat == 'on':
 		state = 'low'
-	elif self_stat == 'on' and generator_stat == 'on' and fuel_stat == 'norm' and turbine_stat == 'on' and water_stat == 'on' and boiler_stat == 'open':
+	elif self_stat == 'on' and generator_stat == 'on' and fuel_stat == 'norm' and turbine_stat == 'on':
 		state = 'norm'
-	elif self_stat == 'on' and generator_stat == 'on' and fuel_stat == 'max' and turbine_stat == 'on' and water_stat == 'on' and boiler_stat == 'open':
+	elif self_stat == 'on' and generator_stat == 'on' and fuel_stat == 'max' and turbine_stat == 'on':
 		state = 'max'
 	else:
 		state = 'off'
