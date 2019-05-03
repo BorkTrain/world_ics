@@ -5,13 +5,13 @@ PLCS = {'FUEL':'10.10.1.120','WATERPUMP':'10.10.1.121','BOILER':'10.10.1.122','T
 
 def send_to_plc(reg_loc,reg_value,ip):
 	from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-	modbusClient = ModbusClient(ip, port=5020)
+	modbusClient = ModbusClient(ip, port=502)
 	modbusClient.write_register(reg_loc,reg_value)
 	return True
 
 def read_from_plc(reg_start,reg_stop,ip):
 	from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-	modbusClient = ModbusClient(ip, port=5020)
+	modbusClient = ModbusClient(ip, port=502)
 	res = modbusClient.read_holding_registers(reg_start,reg_stop).registers
 	return res
 
